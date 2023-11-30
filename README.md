@@ -7,7 +7,7 @@ Command Interpreter
 The command interpreter serves as the main interface for users to interact with the Airbnb clone. It allows users to perform various actions, such as searching for listings, making reservations, and managing their bookings.
 
 Getting Started
-To start the Airbnb clone, follow these steps:
+To start the Airbnb clone, follow these steps :
 
 Clone the repository to your local machine.
 Navigate to the project directory.
