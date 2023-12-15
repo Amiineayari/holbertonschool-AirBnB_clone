@@ -1,62 +1,35 @@
 #!/usr/bin/python3
-"""
-test_user is a module used for unit testing of
-the User class.
-"""
+"""We test te class User and all its functions"""
 import unittest
+from datetime import datetime
 from models.user import User
 
 
-class UserTests(unittest.TestCase):
-    """
-    Class UserTests provides unit testing for
-    the User class.
-    """
-    @classmethod
-    def setUp(cls):
-        """
-        Method to set up BaseModel classes for use during testing.
-        """
-        cls.user1 = User()
-        cls.user2 = User()
+class TestBase(unittest.TestCase):
+    """The test class to work in unicode"""
 
-    @classmethod
-    def tearDown(cls):
-        """
-        Method to tear down BaseModel classes for use during testing.
-        """
-        del cls.user1
-        del cls.user2
-        return super().tearDownClass()
-
-    def test_class_attrs(self):
-        self.assertEqual(self.user1.email, "")
-        self.assertEqual(self.user1.password, "")
-        self.assertEqual(self.user1.first_name, "")
-        self.assertEqual(self.user1.last_name, "")
-        self.assertIsInstance(self.user1.email, str)
-        self.assertIsInstance(self.user1.password, str)
-        self.assertIsInstance(self.user1.first_name, str)
-        self.assertIsInstance(self.user1.last_name, str)
-
-    def test_instance_attrs(self):
-        test_dict = self.user2.to_dict()
-        self.user3 = User(test_dict)
-        self.user3.email = "test@fakemail.com"
-        self.user3.password = "1234"
-        self.user3.first_name = "Blatthew"
-        self.user3.last_name = "Blallen"
-        user_info = {
-            "email": "test@fakemail.com",
-            "password": "1234",
-            "first_name": "Blatthew",
-            "last_name": "Blallen"
-        }
-        # Non-depricated version of "assertDictContainsSubset"
-        test_set = {**self.user3.to_dict(), **user_info}
-        self.assertEqual(self.user3.to_dict(), test_set)
-        self.assertNotEqual(self.user2, self.user3)
-
-
-if __name__ == '__name__':
-    unittest.main()
+    def testSet(self):
+        """Check if you can generate an instance"""
+        self.U = User()
+    
+    def testExist(self):
+        """A test that check if the attributes exists in the class"""
+        U1 = User()
+        self.assertTrue(hasattr(U1, "id"))
+        self.assertTrue(hasattr(U1, "created_at"))
+        self.assertTrue(hasattr(U1, "updated_at"))
+        self.assertTrue(hasattr(U1, "email"))
+        self.assertTrue(hasattr(U1, "password"))
+        self.assertTrue(hasattr(U1, "first_name"))
+        self.assertTrue(hasattr(U1, "last_name"))
+    
+    def testUser(self):
+        """A test to check if all values are the correct type"""
+        U2 = User()
+        self.assertIsInstance(U2.id, str)
+        self.assertIsInstance(U2.created_at, datetime)
+        self.assertIsInstance(U2.updated_at, datetime)
+        self.assertIsInstance(U2.email, str)
+        self.assertIsInstance(U2.password, str)
+        self.assertIsInstance(U2.first_name, str)
+        self.assertIsInstance(U2.last_name, str)

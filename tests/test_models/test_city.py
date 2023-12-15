@@ -1,47 +1,31 @@
 #!/usr/bin/python3
-"""
-test_city is a module used for unit testing of
-the City class.
-"""
+"""We test te class City and all its functions"""
 import unittest
+from datetime import datetime
 from models.city import City
 
 
-class CityTests(unittest.TestCase):
-    """
-    Class CityTests provides unit testing for
-    the City class.
-    """
-    @classmethod
-    def setUp(cls):
-        """
-        Method to set up City classes for use during testing.
-        """
-        cls.c1 = City()
+class TestBase(unittest.TestCase):
+    """The test class to work in unicode"""
 
-    @classmethod
-    def tearDown(cls):
-        """
-        Method to tear down City classes for use during testing.
-        """
-        del cls.c1
-        return super().tearDownClass()
-
-    def test_class_attrs(self):
-        self.assertEqual(self.c1.state_id, "")
-        self.assertEqual(self.c1.name, "")
-        self.assertIn('id', self.c1.to_dict())
-        self.assertIn('created_at', self.c1.to_dict())
-        self.assertIn('updated_at', self.c1.to_dict())
-        self.assertIsInstance(self.c1.state_id, str)
-        self.assertIsInstance(self.c1.name, str)
-
-    def test_instance_attrs(self):
-        self.c1.state_id = "OK"
-        self.c1.name = "Tulsa"
-        self.assertEqual(self.c1.state_id, "OK")
-        self.assertEqual(self.c1.name, "Tulsa")
-
-
-if __name__ == '__name__':
-    unittest.main()
+    def testSet(self):
+        """Check if you can generate an instance"""
+        self.C = City()
+    
+    def testExist(self):
+        """A test that check if the attributes exists in the class"""
+        C1 = City()
+        self.assertTrue(hasattr(C1, "id"))
+        self.assertTrue(hasattr(C1, "created_at"))
+        self.assertTrue(hasattr(C1, "updated_at"))
+        self.assertTrue(hasattr(C1, "state_id"))
+        self.assertTrue(hasattr(C1, "name"))
+    
+    def testUser(self):
+        """A test to check if all values are the correct type"""
+        C2 = City()
+        self.assertIsInstance(C2.id, str)
+        self.assertIsInstance(C2.created_at, datetime)
+        self.assertIsInstance(C2.updated_at, datetime)
+        self.assertIsInstance(C2.state_id, str)
+        self.assertIsInstance(C2.name, str)

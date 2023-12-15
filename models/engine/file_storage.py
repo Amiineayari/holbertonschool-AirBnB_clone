@@ -1,58 +1,45 @@
 #!/usr/bin/python3
-"""
-file_storage module that contains the FileStorage class
-definition and methods
-"""
 from models.base_model import BaseModel
-import json
-import os
-import models
-from models.city import City
-from models.place import Place
-from models.review import Review
-from models.state import State
 from models.user import User
-from models.amenity import Amenity
+import json
+
+"""FileStorage is a file were the function to work with deserialization and
+serialization"""
 
 
 class FileStorage:
-    """
-    FileStorage class which serializes instances to a JSON file
-    and deserializes JSON files to instances.
-    """
-
+    """The class FileStorage which is in charge of the file storage methods"""
     __file_path = 'file.json'
     __objects = {}
 
     def all(self):
-        """
-        Returns the dictionary `__objects`.
-        """
+        """A function that returns the dictionary __objects"""
         return self.__objects
 
     def new(self, obj):
-        """
-        Sets in `__objects` the `obj` with key `<obj class name>.id`.
-        """
-        self.__objects[f'{obj.__class__.__name__}.{obj.id}'] = obj
+        """A function that sets in __objects the obj with key
+        <obj class name>.id"""
+
+        key = "{}.{}".format(type(obj).__name__, obj.id)
+        self.__objects[key] = obj
 
     def save(self):
-        """
-        Serializes `__objects` to the JSON file.
-        """
-        ObjectDict = {}
+        """A function that serializes __objects to the JSON file
+        (path: __file_path)"""
+        serialized_obj = {}
         for key, value in self.__objects.items():
-            ObjectDict[key] = value.to_dict()
-        with open(self.__file_path, 'w', encoding='utf=8') as f:
-            f.write(json.dumps(ObjectDict))
+            serialized_obj[key] = value.to_dict()
+        with open(self.__file_path, "w", encoding="utf-8") as file:
+            json.dump(serialized_obj, file)
 
     def reload(self):
-        """
-        Deserializes the JSON file to `__objects` if the file exists;
-        otherwise, does nothing.
-        """
-        if os.path.exists(self.__file_path):
-            with open(self.__file_path, 'r', encoding='utf-8') as f:
-                LoadDict = json.loads(f.read())
-            for key, val in LoadDict.items():
-                self.__objects[key] = eval(val["__class__"])(**val)
+        """A function that : deserializes the JSON file to
+        __objects (only if the JSON file (__file_path) exists ;
+        otherwise, does nothing."""
+        try:
+            with open(self.__file_path, "r", encoding="utf-8") as file:
+                for key, value in json.load(file).items():
+                    value = eval(key.split(".")[0])(**value)
+                    self.__objects[key] = value
+        except FileNotFoundError:
+            pass

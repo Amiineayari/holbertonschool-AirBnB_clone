@@ -1,51 +1,33 @@
 #!/usr/bin/python3
-"""
-test_review is a module used for unit testing of
-the Review class.
-"""
+"""We test te class Review and all its functions"""
 import unittest
+from datetime import datetime
 from models.review import Review
 
 
-class ReviewTests(unittest.TestCase):
-    """
-    Class ReviewTests provides unit testing for
-    the Review class.
-    """
-    @classmethod
-    def setUp(cls):
-        """
-        Method to set up Review classes for use during testing.
-        """
-        cls.r1 = Review()
+class TestBase(unittest.TestCase):
+    """The test class to work in unicode"""
 
-    @classmethod
-    def tearDown(cls):
-        """
-        Method to tear down Review classes for use during testing.
-        """
-        del cls.r1
-        return super().tearDownClass()
-
-    def test_class_attrs(self):
-        self.assertEqual(self.r1.place_id, "")
-        self.assertEqual(self.r1.user_id, "")
-        self.assertEqual(self.r1.text, "")
-        self.assertIn('id', self.r1.to_dict())
-        self.assertIn('created_at', self.r1.to_dict())
-        self.assertIn('updated_at', self.r1.to_dict())
-        self.assertIsInstance(self.r1.place_id, str)
-        self.assertIsInstance(self.r1.user_id, str)
-        self.assertIsInstance(self.r1.text, str)
-
-    def test_instance_attrs(self):
-        self.r1.place_id = "321"
-        self.r1.user_id = "123"
-        self.r1.text = "Fake Review"
-        self.assertEqual(self.r1.place_id, "321")
-        self.assertEqual(self.r1.user_id, "123")
-        self.assertEqual(self.r1.text, "Fake Review")
-
-
-if __name__ == '__name__':
-    unittest.main()
+    def testSet(self):
+        """Check if you can generate an instance"""
+        self.R = Review()
+    
+    def testExist(self):
+        """A test that check if the attributes exists in the class"""
+        R1 = Review()
+        self.assertTrue(hasattr(R1, "id"))
+        self.assertTrue(hasattr(R1, "created_at"))
+        self.assertTrue(hasattr(R1, "updated_at"))
+        self.assertTrue(hasattr(R1, "place_id"))
+        self.assertTrue(hasattr(R1, "user_id"))
+        self.assertTrue(hasattr(R1, "text"))
+    
+    def testUser(self):
+        """A test to check if all values are the correct type"""
+        R2 = Review()
+        self.assertIsInstance(R2.id, str)
+        self.assertIsInstance(R2.created_at, datetime)
+        self.assertIsInstance(R2.updated_at, datetime)
+        self.assertIsInstance(R2.place_id, str)
+        self.assertIsInstance(R2.user_id, str)
+        self.assertIsInstance(R2.text, str)

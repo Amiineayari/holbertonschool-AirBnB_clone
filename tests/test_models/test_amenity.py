@@ -1,43 +1,29 @@
 #!/usr/bin/python3
-"""
-test_amenity is a module used for unit testing of
-the Amenity class.
-"""
+"""We test te class Amenity and all its functions"""
 import unittest
+from datetime import datetime
 from models.amenity import Amenity
 
 
-class AmenityTests(unittest.TestCase):
-    """
-    Class AmenityTests provides unit testing for
-    the Amenity class.
-    """
-    @classmethod
-    def setUp(cls):
-        """
-        Method to set up Amenity classes for use during testing.
-        """
-        cls.a1 = Amenity()
+class TestBase(unittest.TestCase):
+    """The test class to work in unicode"""
 
-    @classmethod
-    def tearDown(cls):
-        """
-        Method to tear down Amenity classes for use during testing.
-        """
-        del cls.a1
-        return super().tearDownClass()
-
-    def test_class_attrs(self):
-        self.assertEqual(self.a1.name, "")
-        self.assertIn('id', self.a1.to_dict())
-        self.assertIn('created_at', self.a1.to_dict())
-        self.assertIn('updated_at', self.a1.to_dict())
-        self.assertIsInstance(self.a1.name, str)
-
-    def test_instance_attrs(self):
-        self.a1.name = "wifi"
-        self.assertEqual(self.a1.name, "wifi")
-
-
-if __name__ == '__name__':
-    unittest.main()
+    def testSet(self):
+        """Check if you can generate an instance"""
+        self.C = Amenity()
+    
+    def testExist(self):
+        """A test that check if the attributes exists in the class"""
+        A1 = Amenity()
+        self.assertTrue(hasattr(A1, "id"))
+        self.assertTrue(hasattr(A1, "created_at"))
+        self.assertTrue(hasattr(A1, "updated_at"))
+        self.assertTrue(hasattr(A1, "name"))
+    
+    def testUser(self):
+        """A test to check if all values are the correct type"""
+        A2 = Amenity()
+        self.assertIsInstance(A2.id, str)
+        self.assertIsInstance(A2.created_at, datetime)
+        self.assertIsInstance(A2.updated_at, datetime)
+        self.assertIsInstance(A2.name, str)

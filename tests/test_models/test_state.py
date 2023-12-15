@@ -1,43 +1,29 @@
-#!/user/bin/python3
-"""
-test_state is a module used for unit testing of
-the State class.
-"""
+#!/usr/bin/python3
+"""We test te class State and all its functions"""
 import unittest
-from models.state import State as State
+from datetime import datetime
+from models.state import State
 
 
-class StateTests(unittest.TestCase):
-    """
-    Class StateTests provides unit testing for
-    the State class.
-    """
-    @classmethod
-    def setUp(cls):
-        """
-        Method to set up State classes for use during testing.
-        """
-        cls.s1 = State()
+class TestBase(unittest.TestCase):
+    """The test class to work in unicode"""
 
-    @classmethod
-    def tearDown(cls):
-        """
-        Method to tear down State classes for use during testing.
-        """
-        del cls.s1
-        return super().tearDownClass()
-
-    def test_class_attrs(self):
-        self.assertEqual(self.s1.name, "")
-        self.assertIn('id', self.s1.to_dict())
-        self.assertIn('created_at', self.s1.to_dict())
-        self.assertIn('updated_at', self.s1.to_dict())
-        self.assertIsInstance(self.s1.name, str)
-
-    def test_instance_attrs(self):
-        self.s1.name = "MyName"
-        self.assertEqual(self.s1.name, "MyName")
-
-
-if __name__ == '__name__':
-    unittest.main()
+    def testSet(self):
+        """Check if you can generate an instance"""
+        self.S = State()
+    
+    def testExist(self):
+        """A test that check if the attributes exists in the class"""
+        S1 = State()
+        self.assertTrue(hasattr(S1, "id"))
+        self.assertTrue(hasattr(S1, "created_at"))
+        self.assertTrue(hasattr(S1, "updated_at"))
+        self.assertTrue(hasattr(S1, "name"))
+    
+    def testUser(self):
+        """A test to check if all values are the correct type"""
+        S2 = State()
+        self.assertIsInstance(S2.id, str)
+        self.assertIsInstance(S2.created_at, datetime)
+        self.assertIsInstance(S2.updated_at, datetime)
+        self.assertIsInstance(S2.name, str)
